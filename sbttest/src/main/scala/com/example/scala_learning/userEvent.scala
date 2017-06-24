@@ -17,6 +17,15 @@ case class userEvent(timestamp: Long,
                      city: String,
                      event: String)
 
+abstract class Amount
+
+case class Dollar(value: Double) extends Amount
+
+case class Currency(value: Double, unit: String) extends Amount
+
+//单例的样例对象
+case object Nothing extends Amount
+
 object Name {
   //可以用提取器从任何对象中提取信息
   def unapply(input: String) = {
@@ -36,6 +45,8 @@ object Number {
     }
   }
 }
+
+
 
 //提取器也可以只是测试其输入而不是将值提取出来。这样方法返回Boolean
 object isCompound {

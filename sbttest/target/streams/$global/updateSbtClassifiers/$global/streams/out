@@ -93,7 +93,6 @@
 [debug] == resolving dependencies org.scala-sbt#classpath;0.13.8->org.scala-sbt#interface;0.13.8 [compile->default(compile)]
 [info] Resolving org.scala-sbt#interface;0.13.8 ...
 [debug] sbt-chain: Checking cache for: dependency: org.scala-sbt#interface;0.13.8 {compile=[default(compile)]}
-[debug] no default cache defined: set to /Users/lichao/.ivy2/cache
 [debug] sbt-chain: module revision found in cache: org.scala-sbt#interface;0.13.8
 [debug] 	found org.scala-sbt#interface;0.13.8 in sbt-chain
 [debug] == resolving dependencies org.scala-sbt#interface;0.13.8->org.scala-lang#scala-library;2.10.4 [compile->default(compile)]
@@ -1102,9 +1101,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.8!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.jboss.interceptor#jboss-interceptor-api;1.1!jboss-interceptor-api.jar
-[debug] :: resolution report :: resolve 770ms :: artifacts dl 35ms
+[debug] :: resolution report :: resolve 404ms :: artifacts dl 17ms
 [debug] 	report for default#sbttest$sbt_2.10;1.0 default produced in /Users/lichao/Documents/scala/sbttest/target/resolution-cache/reports/default-sbttest$sbt_2.10-default.xml
-[debug] 	resolve done (770ms resolve - 35ms download)
+[debug] 	resolve done (404ms resolve - 17ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: default#sbttest$sources_2.10;1.0
 [debug] 	confs: [default]
@@ -1646,6 +1645,6 @@
 [debug] 	[NOT REQUIRED] org.eclipse.sisu#org.eclipse.sisu.inject;0.3.0!org.eclipse.sisu.inject.jar(src)
 [debug] 	[NOT REQUIRED] org.codehaus.plexus#plexus-component-annotations;1.5.5!plexus-component-annotations.jar(src)
 [debug] 	[NOT REQUIRED] org.codehaus.plexus#plexus-classworlds;2.5.2!plexus-classworlds.jar(src)
-[debug] :: resolution report :: resolve 141ms :: artifacts dl 26ms
+[debug] :: resolution report :: resolve 86ms :: artifacts dl 15ms
 [debug] 	report for default#sbttest$sources_2.10;1.0 default produced in /Users/lichao/Documents/scala/sbttest/target/resolution-cache/reports/default-sbttest$sources_2.10-default.xml
-[debug] 	resolve done (141ms resolve - 26ms download)
+[debug] 	resolve done (86ms resolve - 15ms download)

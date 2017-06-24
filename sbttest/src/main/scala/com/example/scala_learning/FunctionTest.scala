@@ -12,9 +12,105 @@ object FunctionTest {
 
     //println(calculatePlus(2, 2));
 
-    var list = Array(3, 2, 4, 9, 1, 5)
-    sort2(list).foreach(println)
+    //var list = Array(3, 2, 4, 9, 1, 5)
+    //sort2(list).foreach(println)
     //list.foreach(println)
+
+    //println(sqrt(2))
+
+    //    println("Pascal's Triangle")
+    //    for (row <- 0 to 10) {
+    //      for (col <- 0 to row)
+    //        print(pascal(col, row) + " ")
+    //      println()
+    //    }
+    //    val list = List(2, 3, 4, 5, 6);
+    //    list.dropRight(2)
+    //    println(list.dropRight(1))
+    //println(balance("()()()".toList))
+
+    //println(countChange(15, List(5, 10, 25, 1)))
+
+    //println(sum(x => x * x)(3, 5))
+
+    //println(contains(x => true, -1))
+
+    println(product(x => x * x)(3, 4))
+  }
+
+  //scala里的类型，除了在定义class,trait,object时会产生类型，还可以通过type关键字来声明类型。
+  //simple type | functional type
+  type Set = Int => Boolean
+
+  // type X 是一个抽象类型，需要子类型在实现时提供X具体的类型。
+  type T = Serializable {
+    type X
+    def foo(): Unit
+  }
+
+
+  def contains(s: Set, elem: Int): Boolean = s(elem)
+
+
+  def listRecursive[T](list: List[T]): Unit = {
+    def loop(tailList: List[T]): Int = {
+      if (tailList.isEmpty) {
+        0
+      }
+      else {
+        println(tailList.head)
+        loop(tailList.tail)
+      }
+    }
+    loop(list)
+  }
+
+  def balance(chars: List[Char]): Boolean = {
+    val openSymbol = '(';
+    val closingSymbol = ')';
+    def balanceLoop(openCount: Int, charList: List[Char]): Boolean = {
+      if (charList.isEmpty && openCount == 0) return true
+      if (openCount == 0 && !charList.isEmpty && charList.head.equals(closingSymbol)) return false
+      if (openCount != 0 && charList.isEmpty) return false
+      println(charList.head)
+      println(openCount)
+      if (charList.head.equals(openSymbol)) {
+        return balanceLoop(openCount + 1, charList.tail)
+      }
+      if (charList.head.equals(closingSymbol)) {
+        return balanceLoop(openCount - 1, charList.tail)
+      }
+      return balanceLoop(openCount, charList.tail)
+    }
+
+    balanceLoop(0, chars)
+  }
+
+  //零钱拼出指定钱的总方法数
+  def countChange(money: Int, coins: List[Int]): Int = {
+    if (money == 0)
+      1
+    else if (coins.size == 0 || money < 0)
+      0
+    else
+      countChange(money, coins.tail) + countChange(money - coins.head, coins)
+  }
+
+
+  def quickSort(xs: List[Int]): List[Int] = {
+    if (xs.isEmpty) xs
+    else
+      quickSort(xs.filter(x => x < xs.head)) ::: xs.head :: quickSort(xs.filter(x => x > xs.head))
+  }
+
+  def pascal(c: Int, r: Int): Int = factor(r) / (factor(c) * factor(r - c))
+
+  def factor(n: Int): Int = {
+    def loop(acc: Int, n: Int): Int = {
+      if (n == 0) 1 else loop(acc * n, n - 1)
+    }
+
+    loop(1, n);
   }
 
 
@@ -113,7 +209,6 @@ object FunctionTest {
           j -= 1
         }
       }
-
       if (l < j) quickSort(1, j)
       if (j < r) quickSort(i, r)
     }
@@ -121,14 +216,61 @@ object FunctionTest {
     quickSort(0, xs.length - 1)
   }
 
-  def sort2(xs: Array[Int]): Array[Int] = {
-    if (xs.length <= 1) xs
-    else {
-      val pivot = xs(xs.length / 2)
-      Array.concat(
-        sort2(xs filter (pivot >)),
-        xs filter (pivot ==),
-        sort2(xs filter (pivot <)))
+  def sqrt(x: Double) {
+    def sort2(xs: Array[Int]): Array[Int] = {
+      if (xs.length <= 1) xs
+      else {
+        val pivot = xs(xs.length / 2)
+        Array.concat(
+          sort2(xs filter (pivot >)),
+          xs filter (pivot ==),
+          sort2(xs filter (pivot <)))
+      }
     }
+
+    def sqrtIter(guess: Double, x: Double): Double = {
+      if (isGoodEnough(guess, x)) guess else sqrtIter(improve(guess, x), x)
+    }
+
+    def isGoodEnough(guess: Double, x: Double): Boolean = {
+      if (abs(guess * guess - x) / x < 0.001) true else false
+    }
+
+    def improve(guess: Double, x: Double) = (guess + x / guess) / 2
+
+    sqrtIter(1, x)
+  }
+
+  def sum(f: Int => Int)(a: Int, b: Int) = {
+    def loop(a: Int, acc: Int): Int = {
+      if (a > b) acc
+      else loop(a + 1, f(a) + acc)
+    }
+
+    loop(a, 0)
+  }
+
+  def mapReduce(f: Int => Int, combine: (Int, Int) => Int, zero: Int)(a: Int, b: Int): Int = {
+    if (a > b) zero
+    else combine(f(a), mapReduce(f, combine, zero)(a + 1, b))
+  }
+
+  def product(f: Int => Int)(a: Int, b: Int): Int = mapReduce(f, (x, y) => x * y, 1)(a, b)
+
+  def factorial(n: Int) = product(x => x)(1, n)
+
+  //There is already a class in the standard library that represents orderings:
+  // scala.math.Ordering[T] which contains comparison functions such as lt() and gt() for standard types.
+  // Types with a single natural ordering should inherit from the trait scala.math.Ordered[T].
+  def ordering: Unit = {
+    val fruitList = List("apples", "oranges", "pears")
+
+    def msort[T](xs: List[T])(implicit ord: Ordering[T]) = {
+      fruitList.reverse
+    }
+
+    msort(fruitList)(Ordering.String.reverse)
+    msort(fruitList) // the compiler figures out the right ordering
+    println(fruitList)
   }
 }

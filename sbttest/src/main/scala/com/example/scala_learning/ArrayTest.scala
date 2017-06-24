@@ -1,6 +1,7 @@
 package com.example.scala_learning
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 /**
   * Created by lichao on 2017/4/7.
@@ -11,7 +12,11 @@ object ArrayTest {
     //    println(capitals get "France" getOrElse (""))
     //    val secret: Option[Any] = Option("hello")
     //    secret.foreach(s => println(s))
-    testMap
+    //testMap
+    //streamTest
+
+    val b = ArrayBuffer(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    println(b.filter(_ % 2 != 0).map(_ * 2))
   }
 
   class CC[T] {
@@ -156,5 +161,48 @@ object ArrayTest {
     println()
     //第二种实现
     (for (n <- names) yield n.toUpperCase).map(_ + " ").foreach(print)
+  }
+
+  def reduceFold: Unit = {
+    //从集合头部开始
+    println(List(1, 7, 2, 9).reduceLeft(_ - _))
+    //从集合尾部开始
+    println(List(1, 7, 2, 9).reduceRight(_ - _))
+    //以不同于集合首元素的初始元素开始计算
+    println(List(1, 7, 2, 9).foldLeft(0)(_ - _))
+  }
+
+  def streamTest: Unit = {
+    val words = Source.fromFile("/Users/lichao/desktop/test.txt").getLines().toStream
+    words.map(s => s).foreach(println)
+  }
+
+  def switchTest: Unit = {
+    val ch: Char = ' ';
+    var sign = 0
+    val str = ""
+    var digit = 0;
+
+    ch match {
+      case '+' => sign = 1
+      case '-' => sign = -1
+      case _ => sign = 0 //相当于default
+    }
+
+    //匹配模式中带有变量
+    str(1) match {
+      case '+' => sign = 1
+      case '-' => sign = -1
+      case ch => digit = Character.digit(ch, 10)
+    }
+
+    //类型模式
+    //    ch match {
+    //      case x: Int => x
+    //      case s: String => Integer.parseInt(s)
+    //      case _: BigInt => Int.MaxValue
+    //      case _ => 0
+    //    }
+
   }
 }

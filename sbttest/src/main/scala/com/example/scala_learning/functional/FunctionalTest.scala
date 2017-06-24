@@ -42,8 +42,32 @@ object TestMain {
   //factor 0.5保存入half
   val half = mulBy(0.5)
 
+  //求一个数的阶乘
+  def factorial(n: Int): Int = {
+    //Scala中的尾调用,Scala会监测到这种自递归，只要递归调用发生在尾部，编译器会优化成类似while循环的字节码
+    //尾递归指的是调用者在一个递归调用之后不做其他事，只是返回这个调用的结果
+    def go(n: Int, acc: Int): Int = {
+      if (n <= 0) acc
+      else go(n - 1, acc * n)
+    }
+
+    go(n, 1)
+  }
+
+  //non tail 非尾递归
+  def fib1(n: Int): Int = {
+    def value(n: Int): Int = {
+      if (n == 1) return 0;
+      if (n == 2) return 1;
+
+      value(n - 1) + value(n - 2)
+    }
+
+    value(n)
+  }
+
   def main(args: Array[String]) {
-    println(list3)
+    println(fib1(4))
   }
 
 }
